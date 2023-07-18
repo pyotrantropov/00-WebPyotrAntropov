@@ -1,0 +1,31 @@
+Siguendo documentacion de
+
+###acme-companion
+https://hub.docker.com/r/nginxproxy/acme-companion
+
+Step 1 - nginx-proxy
+
+Start nginx-proxy with the three additional volumes declared:
+$ docker run --detach \
+    --name nginx-proxy \
+    --network 00-webpyotrantropov_default \
+    --publish 80:80 \
+    --publish 443:443 \
+    --volume certs:/etc/nginx/certs \
+    --volume vhost:/etc/nginx/vhost.d \
+    --volume html:/usr/share/nginx/html \
+    --volume /var/run/docker.sock:/tmp/docker.sock:ro \
+    nginxproxy/nginx-proxy
+
+Step 2 - acme-companion
+
+Start the acme-companion container, getting the volumes from nginx-proxy with --volumes-from:
+
+$ docker run --detach \
+    --name nginx-proxy-acme \
+    --network 00-webpyotrantropov_default \
+    --volumes-from nginx-proxy \
+    --volume /var/run/docker.sock:/var/run/docker.sock:ro \
+    --volume acme:/etc/acme.sh \
+    --env "DEFAULT_EMAIL=pyotr@pyotrantropov.net" \
+    nginxproxy/acme-companion
