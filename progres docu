@@ -1,4 +1,4 @@
-Siguendo documentacion de
+Folow documentation of:
 
 ###acme-companion
 https://hub.docker.com/r/nginxproxy/acme-companion
@@ -29,3 +29,4 @@ $ docker run --detach \
     --volume acme:/etc/acme.sh \
     --env "DEFAULT_EMAIL=pyotr@pyotrantropov.net" \
     nginxproxy/acme-companion
+
